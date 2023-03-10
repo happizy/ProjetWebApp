@@ -102,6 +102,23 @@ class Country {
     }
 
 
+
+    // Fonction qui affiche les informations de tous les pays
+    static display_all_countries(){
+        const countriesContainer = document.getElementById('ici');
+            const ulDivStart = document.createElement('div');
+            ulDivStart.innerHTML = `<ul>`;
+            countriesContainer.appendChild(ulDivStart);
+            Country.all_countries.forEach(country => {
+                const countryDiv = document.createElement('div');
+                countryDiv.innerHTML = `<li>${country}</li>`;
+                countriesContainer.appendChild(countryDiv);
+            })
+            const ulDivEnd = document.createElement('div');
+            ulDivEnd.innerHTML = `<ul>`;
+            countriesContainer.appendChild(ulDivEnd);
+    }
+
 }
 
 
@@ -132,21 +149,7 @@ function fill_db(){
     }).catch(error => console.error(error));
 }
 
-// Fonction qui affiche les informations de tous les pays
-function display_all_countries(){
-    const countriesContainer = document.getElementById('ici');
-        const ulDivStart = document.createElement('div');
-        ulDivStart.innerHTML = `<ul>`;
-        countriesContainer.appendChild(ulDivStart);
-        Country.all_countries.forEach(country => {
-            const countryDiv = document.createElement('div');
-            countryDiv.innerHTML = `<li>${country}</li>`;
-            countriesContainer.appendChild(countryDiv);
-        })
-        const ulDivEnd = document.createElement('div');
-        ulDivEnd.innerHTML = `<ul>`;
-        countriesContainer.appendChild(ulDivEnd);
-}
+
 
 
 
