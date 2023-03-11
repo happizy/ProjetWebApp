@@ -2,6 +2,7 @@ class Currency{
     
     static all_currencies = [];
     
+
     constructor(code,name,symbole){
         this._code = code;
         this._name = name;
@@ -27,4 +28,3 @@ class Currency{
     }
 
 }
-
