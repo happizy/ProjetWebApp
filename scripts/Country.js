@@ -85,6 +85,14 @@ class Country {
         return countrylanguages;
     }
 
+    static getCountryByCode(code){
+        return Country.all_countries[code];
+    }
+
+    static getNumberOfCountries(){
+        return Object.keys(Country.all_countries).length;
+    }
+
 
     
     // Fonction qui affiche les informations de tous les pays
@@ -114,32 +122,7 @@ function fill_db(){
     .then(data => {
         // Création des instances de Country à partir des données JSON
         data.forEach(countryData => {
-            let newCurrencies = [];
-            let newLanguages = [];
-
-            if(countryData.hasOwnProperty("currencies") > 0){
-                countryData.currencies.forEach(currency => {
-                    newCurrencies.push(currency.code); // Ajout du code de la devise dans le tableau des devises du pays
-                    var newCurrency = new Currency(
-                        currency.code,
-                        currency.name,
-                        currency.symbol
-                    );
-                    Currency.all_currencies[newCurrency._code] = newCurrency; // Stockage dans le tableau static de la classe Currency
-                });
-            }
-
-            if(countryData.hasOwnProperty("languages") > 0){
-                countryData.languages.forEach(language => {
-                    newLanguages.push(language.iso639_2); // Ajout du code de la langue dans le tableau des langues du pays
-                    var newLanguage = new Language(
-                        language.name,
-                        language.iso639_2,
-                    );
-                    Language.all_languages[newLanguage._code] = newLanguage; // Stockage dans le tableau static de la classe Language
-                });
-            }
-
+            
             const country = new Country(
                 countryData.alpha3Code,
                 countryData.name,
@@ -149,13 +132,40 @@ function fill_db(){
                 countryData.region,
                 countryData.flag,
                 countryData.topLevelDomain,
-                newCurrencies,
-                newLanguages,
+                [],
+                [],
                 countryData.borders,
                 countryData.demonym
                 );
-                Country.all_countries.push(country); // Stockage dans le tableau static de la classe Country
+
+                if(countryData.hasOwnProperty("currencies") > 0){
+                    countryData.currencies.forEach(currency => {
+                        country.currencies.push(currency.code); // Ajout du code de la devise dans le tableau des devises du pays
+                        var newCurrency = new Currency(
+                            currency.code,
+                            currency.name,
+                            currency.symbol
+                        );
+                        Currency.all_currencies[newCurrency._code] = newCurrency; // Stockage dans le tableau static de la classe Currency
+                    });
+                }
+    
+                if(countryData.hasOwnProperty("languages") > 0){
+                    countryData.languages.forEach(language => {
+                        country.languages.push(language.iso639_2); // Ajout du code de la langue dans le tableau des langues du pays
+                        var newLanguage = new Language(
+                            language.name,
+                            language.iso639_2,
+                        );
+                        Language.all_languages[newLanguage._code] = newLanguage; // Stockage dans le tableau static de la classe Language
+                    });
+                }
+
+
+                Country.all_countries[country.alphaCode3] = country; // Stockage dans le tableau static de la classe Country
             });
+
+
 
                 
     }).catch(error => console.error(error));

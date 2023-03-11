@@ -24,4 +24,8 @@ class Language {
     static getLanguageByCode(code) {
         return Language.all_languages[code];
     }
+
+    static getNumberOfLanguages() {
+        return Object.keys(Language.all_languages).length;
+    }
 }

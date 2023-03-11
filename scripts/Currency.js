@@ -26,5 +26,9 @@ class Currency{
         return Currency.all_currencies[code];
     }
 
+    static getNumberOfCurrencies(){
+        return Object.keys(Currency.all_currencies).length;
+    }
+
 }
 
