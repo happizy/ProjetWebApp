@@ -7,23 +7,21 @@ class Language {
         this._code = code;
     }
 
-// Getters
+    // Getters
     get name() { return this._name; }
-    
     get code() { return this._code; }
 
-// Setters
+    // Setters
     set name(name) { this._name = name; }
-
     set code(code) { this._code = code; }
 
-// Methods
+    // Methods
+    // get the language as a string
     toString() {
         return `${this._name} (${this._code})`;
     }
 
-    // get all languages 
-    static getLanguages() {
-        return Language.all_languages;
+    static getLanguageByCode(code) {
+        return Language.all_languages[code];
     }
 }

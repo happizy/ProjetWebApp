@@ -17,62 +17,38 @@ class Country {
         this._demonym = demonym;
     }
 
-// Getters
+    // Getters
     get alphaCode3() {return this._alphaCode3;}
-
     get name() {return this._name;}
-
     get capital() {return this._capital;}
-
     get superficie() {return this._superficie;}
-
     get population() {return this._population;}
-
     get continent() {return this._continent;}
-    
     get flag() {return this._flag;}
-    
     get topLevelDomain() {return this._topLevelDomain;}
-    
     get currencies() {return this._currencies;}
-    
     get languages() {return this._languages;}
-    
     get borders() {return this._borders;}
-    
     get demonym() {return this._demonym;}
 
 
-// Setters
+    // Setters
     set alphaCode3(alphaCode3) {this._alphaCode3 = alphaCode3;}
-    
     set name(name) {this._name = name;}
-    
     set capital(capital) {this._capital = capital;}
-    
     set superficie(superficie) {this._superficie = superficie;}
-    
     set population(population) {this._population = population;}
-    
     set continent(continent) {this._continent = continent;}
-    
     set flag(flag) {this._flag = flag;}
-    
     set topLevelDomain(topLevelDomain) {this._topLevelDomain = topLevelDomain;}
-    
     set currencies(currencies) {this._currencies = currencies;}
-    
     set languages(languages) {this._languages = languages;}
-    
     set borders(borders) {this._borders = borders;}
-    
     set demonym(demonym) {this._demonym = demonym;}
 
 
 
-
-
-// Methods
+    // Methods
     // get the country as a string
     toString() {
         return `Country: ${this._name} (${this._alphaCode3})`;
@@ -83,15 +59,7 @@ class Country {
         return this._population / this._superficie;
     }
 
-    // get the borders as an array of Country objects
-    // getBorders(){
-    //     let borders = [];
-    //     for (let i = 0; i < this._borders.length; i++) {
-    //         let country = Country[this._borders[i]];
-    //         borders.push(country);
-    //     }
-    //     return borders;
-    // }
+    // get the country's neighbours
     getBorders(){
         let borders = [];
         for (let i = 0; i < this._borders.length; i++) {
@@ -100,25 +68,41 @@ class Country {
         }
         return borders;
     }
+    
+    getCurrencies(){
+        let countryCurrencies = [];
+        this.currencies.forEach(currency => {
+            countryCurrencies.push(Currency.getCurrencyByCode(currency));
+        });
+        return countryCurrencies;
+    }
+
+    getLanguages(){
+        let countrylanguages = [];
+        this.languages.forEach(language => {
+            countrylanguages.push(Language.getLanguageByCode(language));
+        });
+        return countrylanguages;
+    }
 
 
-
+    
     // Fonction qui affiche les informations de tous les pays
     static display_all_countries(){
         const countriesContainer = document.getElementById('ici');
-            const ulDivStart = document.createElement('div');
-            ulDivStart.innerHTML = `<ul>`;
-            countriesContainer.appendChild(ulDivStart);
-            Country.all_countries.forEach(country => {
-                const countryDiv = document.createElement('div');
-                countryDiv.innerHTML = `<li>${country}</li>`;
-                countriesContainer.appendChild(countryDiv);
-            })
-            const ulDivEnd = document.createElement('div');
-            ulDivEnd.innerHTML = `<ul>`;
-            countriesContainer.appendChild(ulDivEnd);
+        const ulDivStart = document.createElement('div');
+        ulDivStart.innerHTML = `<ul>`;
+        countriesContainer.appendChild(ulDivStart);
+        Country.all_countries.forEach(country => {
+            const countryDiv = document.createElement('div');
+            countryDiv.innerHTML = `<li>${country}</li>`;
+            countriesContainer.appendChild(countryDiv);
+        })
+        const ulDivEnd = document.createElement('div');
+        ulDivEnd.innerHTML = `<ul>`;
+        countriesContainer.appendChild(ulDivEnd);
     }
-
+    
 }
 
 
@@ -130,22 +114,50 @@ function fill_db(){
     .then(data => {
         // Création des instances de Country à partir des données JSON
         data.forEach(countryData => {
-        const country = new Country(
-            countryData.alpha3Code,
-            countryData.name,
-            countryData.capital,
-            countryData.area,
-            countryData.population,
-            countryData.region,
-            countryData.flag,
-            countryData.topLevelDomain,
-            countryData.currencies,
-            countryData.languages,
-            countryData.borders,
-            countryData.demonym
-        );
-        Country.all_countries.push(country); // Stockage dans le tableau static de la classe Country
-        });
+            let newCurrencies = [];
+            let newLanguages = [];
+
+            if(countryData.hasOwnProperty("currencies") > 0){
+                countryData.currencies.forEach(currency => {
+                    newCurrencies.push(currency.code); // Ajout du code de la devise dans le tableau des devises du pays
+                    var newCurrency = new Currency(
+                        currency.code,
+                        currency.name,
+                        currency.symbol
+                    );
+                    Currency.all_currencies[newCurrency._code] = newCurrency; // Stockage dans le tableau static de la classe Currency
+                });
+            }
+
+            if(countryData.hasOwnProperty("languages") > 0){
+                countryData.languages.forEach(language => {
+                    newLanguages.push(language.iso639_2); // Ajout du code de la langue dans le tableau des langues du pays
+                    var newLanguage = new Language(
+                        language.name,
+                        language.iso639_2,
+                    );
+                    Language.all_languages[newLanguage._code] = newLanguage; // Stockage dans le tableau static de la classe Language
+                });
+            }
+
+            const country = new Country(
+                countryData.alpha3Code,
+                countryData.name,
+                countryData.capital,
+                countryData.area,
+                countryData.population,
+                countryData.region,
+                countryData.flag,
+                countryData.topLevelDomain,
+                newCurrencies,
+                newLanguages,
+                countryData.borders,
+                countryData.demonym
+                );
+                Country.all_countries.push(country); // Stockage dans le tableau static de la classe Country
+            });
+
+                
     }).catch(error => console.error(error));
 }
 
@@ -154,3 +166,13 @@ function fill_db(){
 
 
 
+//commented code
+// get the borders as an array of Country objects
+// getBorders(){
+//     let borders = [];
+//     for (let i = 0; i < this._borders.length; i++) {
+//         let country = Country[this._borders[i]];
+//         borders.push(country);
+//     }
+//     return borders;
+// }
