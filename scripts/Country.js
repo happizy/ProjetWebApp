@@ -62,9 +62,11 @@ class Country {
     // get the country's neighbours
     getBorders(){
         let borders = [];
-        for (let i = 0; i < this._borders.length; i++) {
-            let country = Country.all_countries.find(c => c.alphaCode3 === this._borders[i]);
-            borders.push(country);
+        if(this._borders != undefined){
+            for (let i = 0; i < this._borders.length; i++) {
+                let border = this._borders[i];
+                borders.push(border);
+            }
         }
         return borders;
     }
