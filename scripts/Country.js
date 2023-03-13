@@ -4,7 +4,13 @@ class Country {
 
     constructor(alphaCode3, name, capital, superficie, population, continent, flag, topLevelDomain, currencies, languages, borders, demonym){
         this._alphaCode3 = alphaCode3;
-        this._name = name;
+        this._name = {
+            fr : name.fr,
+            br : name.br,
+            de : name.de,
+            it : name.it,
+            es : name.es
+        };
         this._capital = capital;
         this._superficie = superficie;
         this._population = population;
