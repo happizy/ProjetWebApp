@@ -62,7 +62,8 @@ class Country {
 
     // get the population density (hab/km2)
     getPopDensity() {
-        return this._population / this._superficie;
+        if (!this._superficie) return -1;
+        else return this._population / this._superficie;
     }
 
     // get the country's neighbours
@@ -70,8 +71,8 @@ class Country {
         let borders = [];
         if (this._borders != undefined){ 
             for (let i = 0; i < this._borders.length; i++) {
-                let country = this._borders[i];
-                borders.push(country);
+                let neighbor = this._borders[i];
+                borders.push(Country.getCountryByCode(neighbor));
             }
         };
         
