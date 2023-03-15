@@ -54,6 +54,8 @@ fill_db();
 
 
 
+
+
 // Fonction qui créer des instances de la classe Country, Currency, Language avec le fichier JSON : countries.json
 // function fill_db(){
 //     // Récupération des données du fichier JSON avec fetch

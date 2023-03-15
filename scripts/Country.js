@@ -75,7 +75,6 @@ class Country {
                 borders.push(Country.getCountryByCode(neighbor));
             }
         };
-        
         return borders;
     }
     
