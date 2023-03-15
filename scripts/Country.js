@@ -64,8 +64,8 @@ class Country {
         let borders = [];
         if(this._borders != undefined){
             for (let i = 0; i < this._borders.length; i++) {
-                let border = this._borders[i];
-                borders.push(border);
+                let neighbor = this._borders[i];
+                borders.push(Country.getCountryByCode(neighbor));
             }
         }
         return borders;

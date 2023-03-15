@@ -29,3 +29,63 @@ function moreLanguages(){
     });
     return moreLanguagesTable;
 }
+
+function withoutCommonCurrency(){
+    let withoutCommonCurrencyTable = [];
+    Object.keys(Country.all_countries).forEach(key =>{
+        let currentCountry = Country.getCountryByCode(key);
+        let hasCommonCurrency = false;
+        currentCountry.getBorders().forEach(neighbour => {
+            if ((neighbour.getCurrencies().some(currency => currentCountry.getCurrencies().includes(currency)))){
+                hasCommonCurrency = true;
+            }
+        });
+        if(!hasCommonCurrency) withoutCommonCurrencyTable.push(currentCountry);
+    });
+    return withoutCommonCurrencyTable;
+}
+
+function moreTopLevelDomains(){
+    let moreTopLevelDomainsTable = [];
+    Object.keys(Country.all_countries).forEach(key => {
+        let currentCountry = Country.getCountryByCode(key);
+        if(currentCountry.topLevelDomain.length > 1) moreTopLevelDomainsTable.push(currentCountry);
+    });
+    return moreTopLevelDomainsTable;
+}
+
+function veryLongTrip(mon_pays) {
+    let destinations = [];
+
+    function recursif(pays) {
+        if (pays) {
+            if(!destinations.includes(pays.alphaCode3)){
+                destinations.push(pays.alphaCode3);
+                for (let voisin of pays.getBorders()) {
+                    recursif(voisin);
+                }
+            } 
+        }
+    }
+
+    recursif(mon_pays);
+
+    return destinations;
+}
+
+function mostDestinations(){
+    let currentMaxDestinations = [];
+    let currentMaxDestinationsNumber = 0;
+    Object.keys(Country.all_countries).forEach(key => {
+        let currentCountry = Country.getCountryByCode(key);
+        let trips = veryLongTrip(currentCountry);
+        if(trips.length > currentMaxDestinationsNumber){
+            currentMaxDestinations = [];
+            currentMaxDestinationsNumber = trips.length;
+            currentMaxDestinations[currentCountry.alphaCode3] = trips;
+        }else if(trips.length == currentMaxDestinationsNumber){
+            currentMaxDestinations[currentCountry.alphaCode3] = trips;
+        }
+    });
+    return currentMaxDestinations;
+}
