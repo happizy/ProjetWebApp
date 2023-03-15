@@ -6,7 +6,7 @@ function fill_db(){
         
         const country = new Country(
             countryData.alpha3Code,
-            countryData.name,
+            countryData.translations,
             countryData.capital,
             countryData.area,
             countryData.population,

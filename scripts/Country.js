@@ -4,7 +4,13 @@ class Country {
 
     constructor(alphaCode3, name, capital, superficie, population, continent, flag, topLevelDomain, currencies, languages, borders, demonym){
         this._alphaCode3 = alphaCode3;
-        this._name = name;
+        this._name = {
+            fr : name.fr,
+            br : name.br,
+            de : name.de,
+            it : name.it,
+            es : name.es
+        };
         this._capital = capital;
         this._superficie = superficie;
         this._population = population;
@@ -56,18 +62,19 @@ class Country {
 
     // get the population density (hab/km2)
     getPopDensity() {
-        return this._population / this._superficie;
+        if (!this._superficie) return -1;
+        else return this._population / this._superficie;
     }
 
     // get the country's neighbours
     getBorders(){
         let borders = [];
-        if(this._borders != undefined){
+        if (this._borders != undefined){ 
             for (let i = 0; i < this._borders.length; i++) {
                 let neighbor = this._borders[i];
                 borders.push(Country.getCountryByCode(neighbor));
             }
-        }
+        };
         return borders;
     }
     
