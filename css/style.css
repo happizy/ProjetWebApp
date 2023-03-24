@@ -1,0 +1,51 @@
+body{
+    font-family: sans-serif;
+    overflow-x: hidden;
+}
+
+#tableCountries {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 1.4rem;
+}
+
+#tableCountries th,
+#tableCountries td {
+    text-align: center !important;
+    border: 1px solid #ddd;
+    padding: 8px;
+    height: 50px;
+}
+
+#tableCountries td {
+    height: 100px;
+}
+
+#tableCountries td img {
+    height: 100%;
+    padding: 10px;
+}
+
+#tableCountries tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#tableCountries tr{
+    max-height: 100px;
+    transition: 0.2s ease-in-out;
+}
+
+#tableCountries tr:hover {
+    background-color: #ddd;
+    transition: 0.2s ease-in-out;
+}
+
+#tableCountries th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
