@@ -145,45 +145,10 @@ function fillPage25(index){
     
         tbodyCountries.appendChild(newTr);
     }
-    let currentNumber = document.getElementById("currNumber");
-    let previousNumber = document.getElementById("prevNumber");
-    let nextNumber = document.getElementById("nextNumber");
+    let currentNumber = document.getElementById('currNumber');
     currentNumber.innerHTML = index+1;
-    if(index == 0){
-        previousNumber.innerHTML = null;
-    }else{
-        previousNumber.innerHTML = index;
-    }
-    nextNumber.innerHTML = index+2;
 
 }
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    var index = 0;
-    var next = document.getElementById("next");
-    var previous = document.getElementById("previous");
-    var nextNumber = 1;
-    var previousNumber = null;
-    fill_db();
-    //fillPage();
-    fillPage25(0);
-    document.getElementById("next").addEventListener("click", () => {
-        if( index*25+25 < Object.keys(Country.all_countries).length){
-            index++;
-            nextNumber = null;
-        }
-        fillPage25(index);
-    });
-
-    document.getElementById("back").addEventListener("click", () => {
-        if(index > 0){
-            index--;
-        }
-        fillPage25(index);
-    });  
-});
 
 //Country.display_all_countries();
 
