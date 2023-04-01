@@ -109,6 +109,7 @@ function fillPage25(index){
 
         let newTr = document.createElement('tr');
         newTr.id = currentCountry.alphaCode3;
+        newTr.classList.add('country');
         
         
         let tdNom = document.createElement('td');
