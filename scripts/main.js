@@ -97,15 +97,15 @@ function fillPage(){
     });
 }
 
-function fillPage25(index){
+function fillPage25(index, countryTable){
     const tbodyCountries = document.querySelector('tbody');
     tbodyCountries.innerHTML = null;
     let max = index*25+24;
-    if(max > Object.keys(Country.all_countries).length){
-        max = Object.keys(Country.all_countries).length;
+    if(max > Object.keys(countryTable).length){
+        max = Object.keys(countryTable).length;
     }
     for(let i = index*25; i<=max; i++){
-        let currentCountry = Country.getCountryByCode(Object.keys(Country.all_countries)[i]);
+        let currentCountry = Country.getCountryByCode(Object.keys(countryTable)[i]);
 
         let newTr = document.createElement('tr');
         newTr.id = currentCountry.alphaCode3;
@@ -158,32 +158,170 @@ function fillPage25(index){
 
 }
 
+// Fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
+function updateCountriesList(continent, language, name) {
+    // Vérification si l'utilisateur a sélectionné un continent, une langue ou un nom de pays
+    if ((continent === 'all') && (language === 'all') && (name === '')) {
+      return Country.all_countries; // la liste de tous les pays
+    } else {
+        var filteredCountriesCodes = Object.keys(Country.all_countries);
+        if (continent !== 'all') {
+            // Filtrage des pays en fonction du continent sélectionné
+            filteredCountriesCodes = filteredCountriesCodes.filter(code => Country.getCountryByCode(code).continent === continent); 
+        }
+        if (language !== 'all') {
+            // Filtrage des pays en fonction de la langue sélectionnée
+            filteredCountriesCodes = filteredCountriesCodes.filter(code => Country.getCountryByCode(code).getLanguages().includes(Language.getLanguageByCode(language)));
+        }
+        if (name !== '') {
+            // Filtrage des pays en fonction du nom de pays saisi
+            // On utilise la méthode toLowerCase() pour ne pas tenir compte de la casse
+            // On utilise la méthode includes() pour vérifier si le nom de pays saisi est contenu dans le nom du pays français ou anglais
+            filteredCountriesCodes = filteredCountriesCodes.filter(code => Country.getCountryByCode(code).name['fr'].toLowerCase().includes(name.toLowerCase()) || Country.getCountryByCode(code).name['br'].toLowerCase().includes(name.toLowerCase()));
+        }
+        const filteredCountries = filteredCountriesCodes.reduce((acc, code) => {
+            acc[code] = Country.getCountryByCode(code);
+            return acc;
+        }, {});
+        return filteredCountries; // la liste des pays filtrés
+    }
+  }
+
+  // Fonction pour remplir dynamiquement le selecteur des continents
+function fillContinentsSelector(countryTable) {
+    const continents = Object.keys(countryTable).reduce((acc, code) => {
+        const continent = Country.getCountryByCode(code).continent;
+        if (!acc.includes(continent)) {
+            acc.push(continent);
+        }
+        return acc;
+    }, []);
+    const continentsSelector = document.getElementById('continent');
+    continentsSelector.innerHTML = null;
+    // Ajout de l'option "Tous"
+    const optionAll = document.createElement('option');
+    optionAll.value = 'all';
+    optionAll.innerHTML = 'Tous';
+    continentsSelector.appendChild(optionAll);
+    // Ajout des autres options
+    continents.forEach(continent => {
+        const option = document.createElement('option');
+        option.value = continent;
+        option.innerHTML = continent;
+        continentsSelector.appendChild(option);
+    });
+}
+
+// Fonction pour remplir dynamiquement le selecteur des langues
+function fillLanguagesSelector(countryTable) {
+    const languages = Object.keys(countryTable).reduce((acc, code) => {
+        const languages = Country.getCountryByCode(code).getLanguages();
+        languages.forEach(language => {
+            if (!acc.includes(language)) {
+                acc.push(language);
+            }
+        });
+        return acc;
+    }, []);
+    const languagesSelector = document.getElementById('language');
+    languagesSelector.innerHTML = null;
+    // Ajout de l'option "Toutes"
+    const optionAll = document.createElement('option');
+    optionAll.value = 'all';
+    optionAll.innerHTML = 'Toutes';
+    languagesSelector.appendChild(optionAll);
+    // Ajout des autres options
+    languages.forEach(language => {
+        const option = document.createElement('option');
+        option.value = language.code;
+        option.innerHTML = language.name;
+        languagesSelector.appendChild(option);
+    });
+}
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    var countryTable = Country.all_countries;
+
+    var continentFilter = document.getElementById('continent');
+    var languageFilter = document.getElementById('language');
+    var nameFilter = document.getElementById('name');
+    var selectedContinent = "all";
+    var selectedLanguage = "all";
+    var selectedName = "";
+
     var index = 0;
     var next = document.getElementById("next");
     var previous = document.getElementById("previous");
     var nextNumber = 1;
     var previousNumber = null;
+
     fill_db();
     //fillPage();
-    fillPage25(0);
+    fillPage25(0, countryTable);
+    fillContinentsSelector(countryTable);
+    fillLanguagesSelector(countryTable);
+
     document.getElementById("next").addEventListener("click", () => {
-        if( index*25+25 < Object.keys(Country.all_countries).length){
+        if( index*25+25 < Object.keys(countryTable).length){
             index++;
             nextNumber = null;
         }
-        fillPage25(index);
+        fillPage25(index, countryTable);
     });
 
     document.getElementById("back").addEventListener("click", () => {
         if(index > 0){
             index--;
         }
-        fillPage25(index);
+        fillPage25(index, countryTable);
     });  
+
+    continentFilter.addEventListener('change', () => {
+        selectedContinent = continentFilter.value; // Récupération de la valeur sélectionnée
+        console.log(selectedContinent);
+        countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
+        console.log(countryTable);
+        fillPage25(0, countryTable);
+        fillLanguagesSelector(countryTable);
+    });
+
+    languageFilter.addEventListener('change', () => {
+        selectedLanguage = languageFilter.value; // Récupération de la valeur sélectionnée
+        console.log(selectedLanguage);
+        countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName ); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
+        console.log(countryTable);
+        fillPage25(0, countryTable);
+    }); 
+
+    nameFilter.addEventListener('change', () => {
+        selectedName = nameFilter.value; // Récupération de la valeur sélectionnée
+        console.log(selectedName);
+        countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName ); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
+        console.log(countryTable);
+        fillPage25(0, countryTable);
+        fillContinentsSelector(countryTable);
+        fillLanguagesSelector(countryTable);
+    } );
+
 });
+
+
+
+// Sélection de l'élément HTML pour le filtre de continent
+// const continentFilter = document.getElementById('continent');
+
+// // Ajout d'un écouteur d'événement pour surveiller les changements de valeur
+// continentFilter.addEventListener('change', () => {
+//   const selectedContinent = continentFilter.value; // Récupération de la valeur sélectionnée
+//   updateCountriesList(selectedContinent); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
+// });
+
+
+
+
+
 
 //Country.display_all_countries();
 

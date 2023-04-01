@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<script src="../scripts/countries.js"></script>
+<script src="../scripts/Country.js"></script>
+<script src="../scripts/Currency.js"></script>
+<script src="../scripts/Language.js"></script>
+<script src="../scripts/main.js"></script>
+<body>
+  
+    <div id="filter">
+      <label for="search">Filtrer par :</label>
+      <!--filter by continent-->
+      <div id="continentfilter">
+        <label for="continent">Continent : </label>
+        <select name="continent" id="continent">
+          <option value="all">Tous</option>
+          <!-- <option value="Africa">Afrique</option>
+          <option value="Americas">Amérique</option>
+          <option value="Asia">Asie</option>
+          <option value="Europe">Europe</option>
+          <option value="Oceania">Océanie</option>  -->
+        </select>
+        <!-- <script>
+          // Construction du selecteur de continent
+          let continents = [];
+          for (let i = 0; i < Country.all_countries.length; i++) {
+            if (!continents.includes(countries[i].continent)) {
+              continents.push(countries[i].continent);
+            }
+          }
+          let continentSelecteur = document.getElementById("continent");
+          for (let i = 0; i < continents.length; i++) {
+            let option = document.createElement("option");
+            option.value = continents[i];
+            option.innerHTML = continents[i];
+            selecteur.appendChild(option);
+          }
+        </script> -->
+        
+      </div>
+      <!--filter by language-->
+      <div id="languagefilter">
+        <label for="language">Langue : </label>
+        <select name="language" id="language">
+          <option value="all">Tous</option>
+          <!-- <option value="fr">Français</option>
+          <option value="en">Anglais</option>
+          <option value="es">Espagnol</option>
+          <option value="de">Allemand</option>
+          <option value="pt">Portugais</option>
+          <option value="ru">Russe</option>
+          <option value="zh">Chinois</option>
+          <option value="ja">Japonais</option>
+          <option value="ar">Arabe</option> -->
+        </select>
+      </div>
+      <!--filter by name-->
+      <div id="namefilter">
+        <label for="name">Pays : </label>
+        <input type="text" id="name" name="name">
+      </div>
+    </div>
+
+
+
+
+    <table id="tableCountries">
+        <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Population</th>
+              <th>Surface</th>
+              <th>Densité de population</th>
+              <th>Continent</th>
+              <th>Drapeau</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr>
+              <td>France</td>
+              <td>65,658,189</td>
+              <td>551 695</td>
+              <td>118.88</td>
+              <td>Europe</td>
+              <td style="padding:10px">
+                <img style="height: 100%;" src="https://flagcdn.com/fr.svg" alt="drapeau de France">
+              </td>
+            </tr> -->
+          </tbody>
+    </table>
+</body>
+<footer id="foot">
+  <div="navbar">
+    <span id="back"><<</span><span id="prevNumber"></span><span id="currNumber"></span><span id="nextNumber"></span><span id="next">>></span> 
+  </div>
+</footer>
+
+</html>
