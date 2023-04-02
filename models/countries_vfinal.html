@@ -16,35 +16,44 @@
 <script src="../scripts/pop-up.js"></script>
 <script type="text/javascript">
   var index = 0;
-  fill_db(countries_data);
-  var countryTable = Country.all_countries;
-  document.addEventListener("DOMContentLoaded", () => {
-      var next = document.getElementById("next");
-      var back = document.getElementById("back");
-      
-      fillLanguagesSelector(Country.all_countries);
-      fillContinentsSelector(Country.all_countries);
-      //fillPage();
-      fillPage25(0, countryTable);
-      
-      document.getElementById("next").addEventListener("click", () => {
-          if( index*25+25 < Object.keys(countryTable).length){
-              index++;
-          }
-          fillPage25(index, countryTable);
-      });
+  fetch('../gateway_to_restcountries.php')
+    .then(response => response.json())
+    .then(data => {
+        // fill_db(data);
+        // fillPage25(0, countryTable);
+        // fillContinentsSelector(countryTable);
+        // fillLanguagesSelector(countryTable);
+        fill_db(data);
+        var countryTable = Country.all_countries;
+        document.addEventListener("DOMContentLoaded", () => {
+            var next = document.getElementById("next");
+            var back = document.getElementById("back");
+            
+            fillLanguagesSelector(Country.all_countries);
+            fillContinentsSelector(Country.all_countries);
+            //fillPage();
+            fillPage25(0, countryTable);
+            
+            document.getElementById("next").addEventListener("click", () => {
+                if( index*25+25 < Object.keys(countryTable).length){
+                    index++;
+                }
+                fillPage25(index, countryTable);
+            });
 
-      document.getElementById("back").addEventListener("click", () => {
-          if(index > 0){
-              index--;
-          }
-          fillPage25(index, countryTable);
-      });  
-  });
+            document.getElementById("back").addEventListener("click", () => {
+                if(index > 0){
+                    index--;
+                }
+                fillPage25(index, countryTable);
+            });  
+        });
+    });
+  
 </script>
 <body>
   <header>
-    <h1>ProjetWebApp - V5 - Tri</h1>
+    <h1>ProjetWebApp - Vfinal - WebService</h1>
     <a href="../index.html">Retour</a>
   </header>
     <div id="filter">
