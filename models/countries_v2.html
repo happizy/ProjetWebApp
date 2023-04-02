@@ -6,21 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-..."/>
 </head>
 <script src="../scripts/countries.js"></script>
 <script src="../scripts/Country.js"></script>
 <script src="../scripts/Currency.js"></script>
 <script src="../scripts/Language.js"></script>
 <script src="../scripts/main.js"></script>
-
 <script type="text/javascript">
-  document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
+        var index = 0;
+        var next = document.getElementById("next");
+        var back = document.getElementById("back");
+
         fill_db();
         //fillPage();
-        fillPage();
+        fillPage25(0);
+        
+        document.getElementById("next").addEventListener("click", () => {
+            if( index*25+25 < Object.keys(Country.all_countries).length){
+                index++;
+            }
+            fillPage25(index);
+        });
+
+        document.getElementById("back").addEventListener("click", () => {
+            if(index > 0){
+                index--;
+            }
+            fillPage25(index);
+        });  
     });
 </script>
-
 <body>
     <table id="tableCountries">
         <thead>
@@ -47,5 +64,21 @@
           </tbody>
     </table>
 </body>
+<!-- <footer id="foot">
+  <div="navbar">
+    <span id="back"><<</span><span id="prevNumber"></span><span id="currNumber"></span><span id="nextNumber"></span><span id="next">>></span> 
+  </div>
+</footer> -->
+<footer>
+    <div class="footer-container">
+      <div id="back" class="arrows">
+        <i class="fas fa-chevron-left"></i>
+      </div>
+      <div id="currNumber" class="page-number">1</div>
+      <div id="next" class="arrows">
+        <i class="fas fa-chevron-right"></i>
+      </div>
+    </div>
+</footer>
 
 </html>

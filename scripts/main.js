@@ -97,6 +97,7 @@ function fillPage(){
     });
 }
 
+
 function fillPage25(index, countryTable){
     const tbodyCountries = document.querySelector('tbody');
     tbodyCountries.innerHTML = null;
@@ -109,7 +110,7 @@ function fillPage25(index, countryTable){
 
         let newTr = document.createElement('tr');
         newTr.id = currentCountry.alphaCode3;
-        
+        newTr.classList.add('country');    
         
         let tdNom = document.createElement('td');
         tdNom.classList.add('name');
@@ -145,16 +146,9 @@ function fillPage25(index, countryTable){
     
         tbodyCountries.appendChild(newTr);
     }
-    let currentNumber = document.getElementById("currNumber");
-    let previousNumber = document.getElementById("prevNumber");
-    let nextNumber = document.getElementById("nextNumber");
+    
+    let currentNumber = document.getElementById('currNumber');
     currentNumber.innerHTML = index+1;
-    if(index == 0){
-        previousNumber.innerHTML = null;
-    }else{
-        previousNumber.innerHTML = index;
-    }
-    nextNumber.innerHTML = index+2;
 
 }
 
