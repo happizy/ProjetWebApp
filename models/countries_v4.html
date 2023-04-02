@@ -12,16 +12,34 @@
 <script src="../scripts/Currency.js"></script>
 <script src="../scripts/Language.js"></script>
 <script src="../scripts/main.js"></script>
-
-<script type="text/javascript">
-  document.addEventListener("DOMContentLoaded", () => {
-        fill_db();
-        //fillPage();
-        fillPage();
-    });
-</script>
-
 <body>
+  
+    <div id="filter">
+      <label for="search">Filtrer par :</label>
+      <!--filter by continent-->
+      <div id="continentfilter">
+        <label for="continent">Continent : </label>
+        <select name="continent" id="continent">
+          <option value="all">Tous</option>
+        </select>  
+      </div>
+      <!--filter by language-->
+      <div id="languagefilter">
+        <label for="language">Langue : </label>
+        <select name="language" id="language">
+          <option value="all">Tous</option>
+        </select>
+      </div>
+      <!--filter by name-->
+      <div id="namefilter">
+        <label for="name">Pays : </label>
+        <input type="text" id="name" name="name">
+      </div>
+    </div>
+
+
+
+
     <table id="tableCountries">
         <thead>
             <tr>
@@ -47,5 +65,10 @@
           </tbody>
     </table>
 </body>
+<footer id="foot">
+  <div="navbar">
+    <span id="back"><<</span><span id="prevNumber"></span><span id="currNumber"></span><span id="nextNumber"></span><span id="next">>></span> 
+  </div>
+</footer>
 
 </html>
