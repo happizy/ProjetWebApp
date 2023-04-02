@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<script>
+  
+
+    
+</script>
+<script src="../scripts/Country.js"></script>
+<script src="../scripts/Currency.js"></script>
+<script src="../scripts/Language.js"></script>
+<script src="../scripts/main.js"></script>
+<body>
+  
+    <div id="filter">
+      <label for="search">Filtrer par :</label>
+      <!--filter by continent-->
+      <div id="continentfilter">
+        <label for="continent">Continent : </label>
+        <select name="continent" id="continent">
+          <option value="all">Tous</option>
+        </select>
+        
+      </div>
+      <!--filter by language-->
+      <div id="languagefilter">
+        <label for="language">Langue : </label>
+        <select name="language" id="language">
+          <option value="all">Tous</option>
+        </select>
+      </div>
+      <!--filter by name-->
+      <div id="namefilter">
+        <label for="name">Pays : </label>
+        <input type="text" id="name" name="name">
+      </div>
+    </div>
+
+
+
+
+    <table id="tableCountries">
+        <thead>
+            <tr>
+              <th id="thName">Nom</th>
+              <th id="thPop">Population</th>
+              <th id="thSurface">Surface</th>
+              <th id="thDensity">Densité de population</th>
+              <th id="thArea">Continent</th>
+              <th>Drapeau</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr>
+              <td>France</td>
+              <td>65,658,189</td>
+              <td>551 695</td>
+              <td>118.88</td>
+              <td>Europe</td>
+              <td style="padding:10px">
+                <img style="height: 100%;" src="https://flagcdn.com/fr.svg" alt="drapeau de France">
+              </td>
+            </tr> -->
+          </tbody>
+    </table>
+</body>
+<footer id="foot">
+  <div="navbar">
+    <span id="back"><<</span><span id="prevNumber"></span><span id="currNumber"></span><span id="nextNumber"></span><span id="next">>></span> 
+  </div>
+</footer>
+
+</html>

@@ -1,11 +1,7 @@
-
-
-
-
 // Fonction qui créer des instances de la classe Country, Currency, Language avec les données countries_data
-function fill_db(){
+function fill_db(data){
     // Création des instances de Country à partir des données JSON
-    countries_data.forEach(countryData => {
+    data.forEach(countryData => {
         
         const country = new Country(
             countryData.alpha3Code,
@@ -46,8 +42,8 @@ function fill_db(){
             }
 
             Country.all_countries[country.alphaCode3] = country; // Stockage dans le tableau static de la classe Country
-
         });
+    // return Country.all_countries;
 }
 
 function fillPage(){
@@ -353,11 +349,15 @@ document.addEventListener("DOMContentLoaded", () => {
     var nextNumber = 1;
     var previousNumber = null;
 
-    fill_db();
-    //fillPage();
-    fillPage25(0, countryTable);
-    fillContinentsSelector(countryTable);
-    fillLanguagesSelector(countryTable);
+    fetch('../gateway_to_restcountries.php')
+        .then(response => response.json())
+        .then(data => {
+            fill_db(data);
+            fillPage25(0, countryTable);
+            fillContinentsSelector(countryTable);
+            fillLanguagesSelector(countryTable);
+            
+        });
 
     document.getElementById("next").addEventListener("click", () => {
         if( index*25+25 < Object.keys(countryTable).length){
