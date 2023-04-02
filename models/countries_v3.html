@@ -13,6 +13,7 @@
 <script src="../scripts/Currency.js"></script>
 <script src="../scripts/Language.js"></script>
 <script src="../scripts/main.js"></script>
+<script src="../scripts/pop-up.js"></script>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
         var index = 0;
@@ -22,12 +23,14 @@
         fill_db();
         //fillPage();
         fillPage25(0);
+        modalInit();
         
         document.getElementById("next").addEventListener("click", () => {
             if( index*25+25 < Object.keys(Country.all_countries).length){
                 index++;
             }
             fillPage25(index);
+            modalInit();
         });
 
         document.getElementById("back").addEventListener("click", () => {
@@ -35,6 +38,7 @@
                 index--;
             }
             fillPage25(index);
+            modalInit();
         });  
     });
 </script>
@@ -80,5 +84,35 @@
       </div>
     </div>
 </footer>
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-info">
+
+        </div>
+    </div>
+  
+</div>
+
+<div id="myModal2" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content bigger">
+      <div class="modal-header">
+          <span class="close">&times;</span>
+      </div>
+      <div class="modal-detail">
+      <div class="texte-detail"></div>
+      <div class="flag-detail"></div>
+      </div>
+
+  </div>
+
+</div>
 
 </html>
