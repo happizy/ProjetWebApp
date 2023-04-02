@@ -20,10 +20,6 @@
   fetch('../gateway_to_restcountries.php')
     .then(response => response.json())
     .then(data => {
-        // fill_db(data);
-        // fillPage25(0, countryTable);
-        // fillContinentsSelector(countryTable);
-        // fillLanguagesSelector(countryTable);
         fill_db(data);
         fillLanguagesSelector(Country.all_countries);
         fillContinentsSelector(Country.all_countries);
