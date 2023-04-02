@@ -3,6 +3,45 @@ body{
     overflow-x: hidden;
 }
 
+#filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    padding-top: 20px;
+  }
+
+  select,input{
+    width: 200px;
+    border-radius: 5px;
+    padding: 5px;
+    border: solid 1px lightgray;
+  }
+
+  select:focus,input:focus{
+    outline: solid 3px #9cec9f;
+  }
+  
+  #filter label {
+    margin-right: 10px;
+  }
+  
+  #continentfilter,
+  #languagefilter,
+  #namefilter {
+    display: flex;
+    align-items: center;
+  }
+  
+  #continentfilter select,
+  #languagefilter select,
+  #namefilter input {
+    margin-left: 10px;
+  }
+
 #tableCountries {
     border-collapse: separate;
     border-spacing: 0;

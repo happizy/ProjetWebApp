@@ -105,7 +105,7 @@ function fillPage25(index, countryTable){
     if(max > Object.keys(countryTable).length){
         max = Object.keys(countryTable).length;
     }
-    for(let i = index*25; i<=max; i++){
+    for(let i = index*25; i<=max-1; i++){
         let currentCountry = Country.getCountryByCode(Object.keys(countryTable)[i]);
 
         let newTr = document.createElement('tr');
@@ -149,6 +149,7 @@ function fillPage25(index, countryTable){
     
     let currentNumber = document.getElementById('currNumber');
     currentNumber.innerHTML = index+1;
+    modalInit();
 
 }
 
@@ -325,7 +326,6 @@ function sortCountries(countryTable, currentTh) {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    var countryTable = Country.all_countries;
 
     var continentFilter = document.getElementById('continent');
     var languageFilter = document.getElementById('language');
@@ -341,32 +341,26 @@ document.addEventListener("DOMContentLoaded", () => {
     var thArea = document.getElementById('thArea');
     var currentTh = null;
 
-    var index = 0;
-    var next = document.getElementById("next");
-    var previous = document.getElementById("previous");
-    var nextNumber = 1;
-    var previousNumber = null;
+    
 
-    fill_db();
-    //fillPage();
-    fillPage25(0, countryTable);
-    fillContinentsSelector(countryTable);
-    fillLanguagesSelector(countryTable);
+    // fill_db();
+    // //fillPage();
+    // fillPage25(0, countryTable);
 
-    document.getElementById("next").addEventListener("click", () => {
-        if( index*25+25 < Object.keys(countryTable).length){
-            index++;
-            nextNumber = null;
-        }
-        fillPage25(index, countryTable);
-    });
+    // document.getElementById("next").addEventListener("click", () => {
+    //     if( index*25+25 < Object.keys(countryTable).length){
+    //         index++;
+    //         nextNumber = null;
+    //     }
+    //     fillPage25(index, countryTable);
+    // });
 
-    document.getElementById("back").addEventListener("click", () => {
-        if(index > 0){
-            index--;
-        }
-        fillPage25(index, countryTable);
-    });  
+    // document.getElementById("back").addEventListener("click", () => {
+    //     if(index > 0){
+    //         index--;
+    //     }
+    //     fillPage25(index, countryTable);
+    // });  
 
     continentFilter.addEventListener('change', () => {
         selectedContinent = continentFilter.value; // Récupération de la valeur sélectionnée
@@ -383,13 +377,11 @@ document.addEventListener("DOMContentLoaded", () => {
         fillPage25(0, countryTable);
     }); 
 
-    nameFilter.addEventListener('change', () => {
+    nameFilter.addEventListener('input', () => {
         selectedName = nameFilter.value; // Récupération de la valeur sélectionnée
         countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName ); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
         countryTable = sortCountries(countryTable, currentTh);
         fillPage25(0, countryTable);
-        fillContinentsSelector(countryTable);
-        fillLanguagesSelector(countryTable);
     } );
 
     thName.addEventListener('click', () => {
