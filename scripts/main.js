@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
         countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
         countryTable = sortCountries(countryTable, currentTh);
         fillPage25(0, countryTable);
-        fillLanguagesSelector(countryTable);
+        // fillLanguagesSelector(countryTable);
     });
 
     languageFilter.addEventListener('change', () => {
