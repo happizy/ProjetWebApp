@@ -3,9 +3,9 @@
 
 
 // Fonction qui créer des instances de la classe Country, Currency, Language avec les données countries_data
-function fill_db(){
+function fill_db(data){
     // Création des instances de Country à partir des données JSON
-    countries_data.forEach(countryData => {
+    data.forEach(countryData => {
         
         const country = new Country(
             countryData.alpha3Code,

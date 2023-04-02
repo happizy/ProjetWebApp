@@ -15,38 +15,69 @@
 <script src="../scripts/main.js"></script>
 <script src="../scripts/pop-up.js"></script>
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", () => {
-        var index = 0;
-        var next = document.getElementById("next");
-        var back = document.getElementById("back");
-
-        fill_db(countries_data);
+  var index = 0;
+  var countryTable = Country.all_countries;
+  fetch('../gateway_to_restcountries.php')
+    .then(response => response.json())
+    .then(data => {
+        fill_db(data);
+        fillLanguagesSelector(Country.all_countries);
+        fillContinentsSelector(Country.all_countries);
         //fillPage();
-        fillPage25(0, Country.all_countries);
-        modalInit();
+        fillPage25(0, countryTable);
+          
         
-        document.getElementById("next").addEventListener("click", () => {
-            if( index*25+25 < Object.keys(Country.all_countries).length){
-                index++;
-            }
-            fillPage25(index, Country.all_countries);
-            modalInit();
-        });
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+      var next = document.getElementById("next");
+      var back = document.getElementById("back");
+      
+      fillLanguagesSelector(Country.all_countries);
+      fillContinentsSelector(Country.all_countries);
+      //fillPage();
+      fillPage25(0, countryTable);
+      
+      document.getElementById("next").addEventListener("click", () => {
+          if( index*25+25 < Object.keys(countryTable).length){
+              index++;
+          }
+          fillPage25(index, countryTable);
+      });
 
-        document.getElementById("back").addEventListener("click", () => {
-            if(index > 0){
-                index--;
-            }
-            fillPage25(index, Country.all_countries);
-            modalInit();
+      document.getElementById("back").addEventListener("click", () => {
+          if(index > 0){
+              index--;
+          }
+          fillPage25(index, countryTable);
         });  
     });
+  
 </script>
 <body>
   <header>
-    <h1>ProjetWebApp - V3 - Détails</h1>
+    <h1>ProjetWebApp - Vfinal - WebService</h1>
     <a href="../index.html">Retour</a>
   </header>
+    <div id="filter">
+      <!--filter by continent-->
+      <div id="continentfilter">
+        <label for="continent">Continent : </label>
+        <select name="continent" id="continent">
+        </select>  
+      </div>
+      <!--filter by language-->
+      <div id="languagefilter">
+        <label for="language">Langue : </label>
+        <select name="language" id="language">
+        </select>
+      </div>
+      <!--filter by name-->
+      <div id="namefilter">
+        <label for="name">Pays : </label>
+        <input type="text" id="name" name="name">
+      </div>
+    </div>
+
     <table id="tableCountries">
       <thead>
         <tr>
