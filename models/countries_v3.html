@@ -22,20 +22,23 @@
 
         fill_db(countries_data);
         //fillPage();
-        fillPage25(0);
+        fillPage25(0, Country.all_countries);
+        modalInit();
         
         document.getElementById("next").addEventListener("click", () => {
             if( index*25+25 < Object.keys(Country.all_countries).length){
                 index++;
             }
-            fillPage25(index);
+            fillPage25(index, Country.all_countries);
+            modalInit();
         });
 
         document.getElementById("back").addEventListener("click", () => {
             if(index > 0){
                 index--;
             }
-            fillPage25(index);
+            fillPage25(index, Country.all_countries);
+            modalInit();
         });  
     });
 </script>
