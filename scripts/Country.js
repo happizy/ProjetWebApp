@@ -102,40 +102,7 @@ class Country {
         return Object.keys(Country.all_countries).length;
     }
 
-
-    
-    // Fonction qui affiche les informations de tous les pays
-    // static display_all_countries(){
-    //     const countriesContainer = document.getElementById('ici');
-    //     const ulDivStart = document.createElement('div');
-    //     ulDivStart.innerHTML = `<ul>`;
-    //     countriesContainer.appendChild(ulDivStart);
-    //     Country.all_countries.forEach(country => {
-    //         const countryDiv = document.createElement('div');
-    //         countryDiv.innerHTML = `<li>${country}</li>`;
-    //         countriesContainer.appendChild(countryDiv);
-    //     })
-    //     const ulDivEnd = document.createElement('div');
-    //     ulDivEnd.innerHTML = `<ul>`;
-    //     countriesContainer.appendChild(ulDivEnd);
-    // }
     
 }
 
 
-
-
-
-
-
-
-//commented code
-// get the borders as an array of Country objects
-// getBorders(){
-//     let borders = [];
-//     for (let i = 0; i < this._borders.length; i++) {
-//         let country = Country[this._borders[i]];
-//         borders.push(country);
-//     }
-//     return borders;
-// }
