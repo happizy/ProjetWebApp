@@ -16,6 +16,7 @@
 <script src="../scripts/pop-up.js"></script>
 <script type="text/javascript">
   var index = 0;
+  var countryTable = Country.all_countries;
   fetch('../gateway_to_restcountries.php')
     .then(response => response.json())
     .then(data => {
@@ -24,30 +25,35 @@
         // fillContinentsSelector(countryTable);
         // fillLanguagesSelector(countryTable);
         fill_db(data);
-        var countryTable = Country.all_countries;
-        document.addEventListener("DOMContentLoaded", () => {
-            var next = document.getElementById("next");
-            var back = document.getElementById("back");
-            
-            fillLanguagesSelector(Country.all_countries);
-            fillContinentsSelector(Country.all_countries);
-            //fillPage();
-            fillPage25(0, countryTable);
-            
-            document.getElementById("next").addEventListener("click", () => {
-                if( index*25+25 < Object.keys(countryTable).length){
-                    index++;
-                }
-                fillPage25(index, countryTable);
-            });
+        fillLanguagesSelector(Country.all_countries);
+        fillContinentsSelector(Country.all_countries);
+        //fillPage();
+        fillPage25(0, countryTable);
+          
+        
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+      var next = document.getElementById("next");
+      var back = document.getElementById("back");
+      
+      fillLanguagesSelector(Country.all_countries);
+      fillContinentsSelector(Country.all_countries);
+      //fillPage();
+      fillPage25(0, countryTable);
+      
+      document.getElementById("next").addEventListener("click", () => {
+          if( index*25+25 < Object.keys(countryTable).length){
+              index++;
+          }
+          fillPage25(index, countryTable);
+      });
 
-            document.getElementById("back").addEventListener("click", () => {
-                if(index > 0){
-                    index--;
-                }
-                fillPage25(index, countryTable);
-            });  
-        });
+      document.getElementById("back").addEventListener("click", () => {
+          if(index > 0){
+              index--;
+          }
+          fillPage25(index, countryTable);
+        });  
     });
   
 </script>
