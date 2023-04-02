@@ -25,12 +25,16 @@
       fillLanguagesSelector(Country.all_countries);
       fillContinentsSelector(Country.all_countries);
       fillPage25(0, countryTable);
+      modalInit();
       
       document.getElementById("next").addEventListener("click", () => {
           if( index*25+25 < Object.keys(countryTable).length){
               index++;
+          }else if(index*25+25 - Object.keys(countryTable).length > 25){
+              index = 0;
           }
           fillPage25(index, countryTable);
+          modalInit();
       });
 
       document.getElementById("back").addEventListener("click", () => {
@@ -38,6 +42,7 @@
               index--;
           }
           fillPage25(index, countryTable);
+          modalInit();
       });  
   });
 </script>

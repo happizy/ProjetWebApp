@@ -105,8 +105,9 @@ function fillPage25(index, countryTable){
     if(max > Object.keys(countryTable).length){
         max = Object.keys(countryTable).length;
     }
-    for(let i = index*25; i<=max-1; i++){
+    for(let i = index*25; i<=max; i++){
         let currentCountry = Country.getCountryByCode(Object.keys(countryTable)[i]);
+        if(!currentCountry) continue;
 
         let newTr = document.createElement('tr');
         newTr.id = currentCountry.alphaCode3;
@@ -149,7 +150,7 @@ function fillPage25(index, countryTable){
     
     let currentNumber = document.getElementById('currNumber');
     currentNumber.innerHTML = index+1;
-    modalInit();
+    
 
 }
 
@@ -341,112 +342,127 @@ document.addEventListener("DOMContentLoaded", () => {
     var thArea = document.getElementById('thArea');
     var currentTh = null;
 
-    continentFilter.addEventListener('change', () => {
-        selectedContinent = continentFilter.value; // Récupération de la valeur sélectionnée
-        countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
-        countryTable = sortCountries(countryTable, currentTh);
-        fillPage25(0, countryTable);
-        // fillLanguagesSelector(countryTable);
-    });
 
-    languageFilter.addEventListener('change', () => {
-        selectedLanguage = languageFilter.value; // Récupération de la valeur sélectionnée
-        countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName ); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
-        countryTable = sortCountries(countryTable, currentTh);
-        fillPage25(0, countryTable);
-    }); 
-
-    nameFilter.addEventListener('input', () => {
-        selectedName = nameFilter.value; // Récupération de la valeur sélectionnée
-        countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName ); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
-        countryTable = sortCountries(countryTable, currentTh);
-        fillPage25(0, countryTable);
-    } );
-
-    thName.addEventListener('click', () => {
-        if(currentTh != thName){
-            currentTh = thName.id;
-            // Trier les pays par nom
-            countryTable = sortByName(countryTable);
-            // Mettre en gras l'en-tête cliqué
-            thName.style.fontWeight = "bold";
-            // Réinitialiser le style des autres en-têtes de colonne
-            thPop.style.fontWeight = "normal";
-            thDensity.style.fontWeight = "normal";
-            thSurface.style.fontWeight = "normal";
-            thArea.style.fontWeight = "normal";
-            // Remplir la page avec les 25 premiers pays
+    if(continentFilter && languageFilter && nameFilter) {
+        continentFilter.addEventListener('change', () => {
+            selectedContinent = continentFilter.value; // Récupération de la valeur sélectionnée
+            countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
+            countryTable = sortCountries(countryTable, currentTh);
             fillPage25(0, countryTable);
-        }
-    });
+            modalInit();
+            // fillLanguagesSelector(countryTable);
+        });
 
-    thPop.addEventListener('click', () => {
-        if(currentTh != thPop){
-            currentTh = thPop.id;
-            // Trier les pays par population
-            countryTable = sortByPopulation(countryTable);
-            // Mettre en gras l'en-tête cliqué
-            thPop.style.fontWeight = "bold";
-            // Réinitialiser le style des autres en-têtes de colonne
-            thName.style.fontWeight = "normal";
-            thDensity.style.fontWeight = "normal";
-            thSurface.style.fontWeight = "normal";
-            thArea.style.fontWeight = "normal";
-            // Remplir la page avec les 25 premiers pays
+        languageFilter.addEventListener('change', () => {
+            selectedLanguage = languageFilter.value; // Récupération de la valeur sélectionnée
+            countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName ); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
+            countryTable = sortCountries(countryTable, currentTh);
             fillPage25(0, countryTable);
-        }
-    });
+            modalInit();
+        }); 
 
-    thDensity.addEventListener('click', () => {
-        if(currentTh != thDensity){
-            currentTh = thDensity.id;
-            // Trier les pays par densité
-            countryTable = sortByDensity(countryTable);
-            // Mettre en gras l'en-tête cliqué
-            thDensity.style.fontWeight = "bold";
-            // Réinitialiser le style des autres en-têtes de colonne
-            thName.style.fontWeight = "normal";
-            thPop.style.fontWeight = "normal";
-            thSurface.style.fontWeight = "normal";
-            thArea.style.fontWeight = "normal";
-            // Remplir la page avec les 25 premiers pays
+        nameFilter.addEventListener('input', () => {
+            selectedName = nameFilter.value; // Récupération de la valeur sélectionnée
+            countryTable = updateCountriesList(selectedContinent, selectedLanguage, selectedName ); // Appel de la fonction pour mettre à jour la liste des pays en fonction du choix de l'utilisateur
+            countryTable = sortCountries(countryTable, currentTh);
             fillPage25(0, countryTable);
-        }
-    });
+            modalInit();
+        } );
+    }
 
-    thSurface.addEventListener('click', () => {
-        if(currentTh != thSurface){
-            currentTh = thSurface.id;
-            // Trier les pays par superficie
-            countryTable = sortBySurface(countryTable);
-            // Mettre en gras l'en-tête cliqué
-            thSurface.style.fontWeight = "bold";
-            // Réinitialiser le style des autres en-têtes de colonne
-            thName.style.fontWeight = "normal";
-            thPop.style.fontWeight = "normal";
-            thDensity.style.fontWeight = "normal";
-            thArea.style.fontWeight = "normal";
-            // Remplir la page avec les 25 premiers pays
-            fillPage25(0, countryTable);
-        }
-    });
 
-    thArea.addEventListener('click', () => {
-        if(currentTh != thArea){
-            currentTh = thArea.id;
-            // Trier les pays par superficie
-            countryTable = sortByArea(countryTable);
-            // Mettre en gras l'en-tête cliqué
-            thArea.style.fontWeight = "bold";
-            // Réinitialiser le style des autres en-têtes de colonne
-            thName.style.fontWeight = "normal";
-            thPop.style.fontWeight = "normal";
-            thDensity.style.fontWeight = "normal";
-            thSurface.style.fontWeight = "normal";
-            // Remplir la page avec les 25 premiers pays
-            fillPage25(0, countryTable);
-        }
-    });
+    if(thName && thPop && thDensity && thSurface && thArea){
+
+        thName.addEventListener('click', () => {
+            if(currentTh != thName){
+                currentTh = thName.id;
+                // Trier les pays par nom
+                countryTable = sortByName(countryTable);
+                // Mettre en gras l'en-tête cliqué
+                thName.style.fontWeight = "bold";
+                // Réinitialiser le style des autres en-têtes de colonne
+                thPop.style.fontWeight = "normal";
+                thDensity.style.fontWeight = "normal";
+                thSurface.style.fontWeight = "normal";
+                thArea.style.fontWeight = "normal";
+                // Remplir la page avec les 25 premiers pays
+                fillPage25(0, countryTable);
+                modalInit();
+            }
+        });
+    
+        thPop.addEventListener('click', () => {
+            if(currentTh != thPop){
+                currentTh = thPop.id;
+                // Trier les pays par population
+                countryTable = sortByPopulation(countryTable);
+                // Mettre en gras l'en-tête cliqué
+                thPop.style.fontWeight = "bold";
+                // Réinitialiser le style des autres en-têtes de colonne
+                thName.style.fontWeight = "normal";
+                thDensity.style.fontWeight = "normal";
+                thSurface.style.fontWeight = "normal";
+                thArea.style.fontWeight = "normal";
+                // Remplir la page avec les 25 premiers pays
+                fillPage25(0, countryTable);
+                modalInit();
+            }
+        });
+    
+        thDensity.addEventListener('click', () => {
+            if(currentTh != thDensity){
+                currentTh = thDensity.id;
+                // Trier les pays par densité
+                countryTable = sortByDensity(countryTable);
+                // Mettre en gras l'en-tête cliqué
+                thDensity.style.fontWeight = "bold";
+                // Réinitialiser le style des autres en-têtes de colonne
+                thName.style.fontWeight = "normal";
+                thPop.style.fontWeight = "normal";
+                thSurface.style.fontWeight = "normal";
+                thArea.style.fontWeight = "normal";
+                // Remplir la page avec les 25 premiers pays
+                fillPage25(0, countryTable);
+                modalInit();
+            }
+        });
+    
+        thSurface.addEventListener('click', () => {
+            if(currentTh != thSurface){
+                currentTh = thSurface.id;
+                // Trier les pays par superficie
+                countryTable = sortBySurface(countryTable);
+                // Mettre en gras l'en-tête cliqué
+                thSurface.style.fontWeight = "bold";
+                // Réinitialiser le style des autres en-têtes de colonne
+                thName.style.fontWeight = "normal";
+                thPop.style.fontWeight = "normal";
+                thDensity.style.fontWeight = "normal";
+                thArea.style.fontWeight = "normal";
+                // Remplir la page avec les 25 premiers pays
+                fillPage25(0, countryTable);
+                modalInit();
+            }
+        });
+    
+        thArea.addEventListener('click', () => {
+            if(currentTh != thArea){
+                currentTh = thArea.id;
+                // Trier les pays par superficie
+                countryTable = sortByArea(countryTable);
+                // Mettre en gras l'en-tête cliqué
+                thArea.style.fontWeight = "bold";
+                // Réinitialiser le style des autres en-têtes de colonne
+                thName.style.fontWeight = "normal";
+                thPop.style.fontWeight = "normal";
+                thDensity.style.fontWeight = "normal";
+                thSurface.style.fontWeight = "normal";
+                // Remplir la page avec les 25 premiers pays
+                fillPage25(0, countryTable);
+                modalInit();
+            }
+        });
+    }
 
 
 
